@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { ArrowIcon, LocationIcon } from "./Icons";
 
 const colors = ["violet", "orange", "blue", "green", "pink", "teal"];
@@ -12,23 +15,65 @@ function initials(company) {
     .toUpperCase();
 }
 
-function timeAgo(date) {
-  const days = Math.max(
-    0,
-    Math.floor((Date.now() - new Date(date).getTime()) / 86400000),
-  );
-  if (days === 0) return "Today";
-  if (days === 1) return "1d ago";
-  if (days < 7) return `${days}d ago`;
-  return `${Math.floor(days / 7)}w ago`;
+function dateLabel(date) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(date));
 }
 
 export default function JobCard({ job }) {
+  const [message, setMessage] = useState("");
   const color =
     colors[
       job.company.split("").reduce((total, char) => total + char.charCodeAt(0), 0) %
         colors.length
     ];
+
+  function getCandidate() {
+    try {
+      return JSON.parse(localStorage.getItem("jobboard-profile") || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  async function saveForLater() {
+    const profile = getCandidate();
+    if (!profile?.email) {
+      window.location.href = `/profile?next=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+      return;
+    }
+    const response = await fetch("/api/saved-jobs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: profile.email, job }),
+    });
+    setMessage(response.ok ? "Saved" : "Could not save");
+  }
+
+  async function applyExternal() {
+    const profile = getCandidate();
+    if (!profile?.email) {
+      window.location.href = `/profile?next=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+      return;
+    }
+
+    await fetch("/api/applications/external", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: profile.name,
+        email: profile.email,
+        phone: profile.phone || "",
+        resumeUrl: profile.resumeUrl || "",
+        job,
+      }),
+    });
+    window.open(job.applyUrl, "_blank", "noopener,noreferrer");
+    setMessage("Application tracked");
+  }
 
   return (
     <article className="job-card">
@@ -36,7 +81,7 @@ export default function JobCard({ job }) {
         <div className={`company-logo ${color}`}>{initials(job.company)}</div>
         <div className="card-source">
           {job.source && <span>{job.source}</span>}
-          <span className="posted">{timeAgo(job.createdAt)}</span>
+          <span className="posted">{dateLabel(job.createdAt)}</span>
         </div>
       </div>
       <div className="job-info">
@@ -51,19 +96,22 @@ export default function JobCard({ job }) {
         <span>{job.type}</span>
         <span>{job.mode}</span>
       </div>
-      {job.external ? (
-        <a
-          className="details-button"
-          href={job.applyUrl}
-          target="_blank"
-          rel="noreferrer"
-        >
-          View and apply <ArrowIcon />
-        </a>
-      ) : (
-        <Link className="details-button" href={`/jobs/${job.id}`}>
-          View details <ArrowIcon />
-        </Link>
+      <div className="card-actions">
+        <button className="save-button" onClick={saveForLater}>
+          {message === "Saved" ? "Saved" : "Save"}
+        </button>
+        {job.external ? (
+          <button className="details-button" onClick={applyExternal}>
+            Apply on The Muse <ArrowIcon />
+          </button>
+        ) : (
+          <Link className="details-button" href={`/jobs/${job.id}`}>
+            View and apply <ArrowIcon />
+          </Link>
+        )}
+      </div>
+      {message && message !== "Saved" && (
+        <span className="card-message">{message}</span>
       )}
     </article>
   );

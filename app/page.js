@@ -2,20 +2,19 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import JobCard from "@/components/JobCard";
 import { ArrowIcon, LocationIcon, SearchIcon } from "@/components/Icons";
 
 export default function Home() {
+  const router = useRouter();
   const [jobs, setJobs] = useState([]);
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(true);
-  const [searching, setSearching] = useState(false);
   const [error, setError] = useState("");
-  const [sources, setSources] = useState(["JobBoard"]);
-  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     async function loadJobs() {
@@ -35,8 +34,6 @@ export default function Home() {
   }, []);
 
   const filteredJobs = useMemo(() => {
-    if (hasSearched) return jobs;
-
     const queryText = query.trim().toLowerCase();
     const locationText = location.trim().toLowerCase();
 
@@ -52,31 +49,14 @@ export default function Home() {
         job.mode.toLowerCase().includes(locationText);
       return matchesQuery && matchesLocation;
     });
-  }, [jobs, query, location, hasSearched]);
+  }, [jobs, query, location]);
 
-  async function showResults(event) {
+  function showResults(event) {
     event.preventDefault();
-    setSearching(true);
-    setError("");
-    document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
-
-    try {
-      const params = new URLSearchParams();
-      if (query.trim()) params.set("q", query.trim());
-      if (location.trim()) params.set("location", location.trim());
-      const response = await fetch(`/api/search?${params.toString()}`, {
-        cache: "no-store",
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Search is unavailable.");
-      setJobs(data.jobs);
-      setSources(data.meta.sources);
-      setHasSearched(true);
-    } catch (searchError) {
-      setError(searchError.message);
-    } finally {
-      setSearching(false);
-    }
+    const params = new URLSearchParams();
+    if (query.trim()) params.set("q", query.trim());
+    if (location.trim()) params.set("location", location.trim());
+    router.push(`/search?${params.toString()}`);
   }
 
   return (
@@ -116,8 +96,8 @@ export default function Home() {
                 placeholder="City or remote"
               />
             </label>
-            <button className="search-button" type="submit" disabled={searching}>
-              {searching ? "Searching..." : "Search jobs"} <ArrowIcon />
+            <button className="search-button" type="submit">
+              Search jobs <ArrowIcon />
             </button>
           </form>
 
@@ -134,7 +114,7 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <span className="section-kicker">Current opportunities</span>
-            <h2>{hasSearched ? "Search results" : "Find your next role"}</h2>
+            <h2>Find your next role</h2>
           </div>
           {!loading && !error && (
             <p>
@@ -144,38 +124,14 @@ export default function Home() {
           )}
         </div>
 
-        {hasSearched && !searching && !error && (
-          <div className="search-summary">
-            <span>Sources: {sources.join(", ")}</span>
-            <button
-              onClick={() => {
-                setQuery("");
-                setLocation("");
-                setHasSearched(false);
-                setLoading(true);
-                fetch("/api/jobs", { cache: "no-store" })
-                  .then((response) => response.json())
-                  .then((data) => setJobs(data.jobs))
-                  .finally(() => setLoading(false));
-              }}
-            >
-              Reset search
-            </button>
-          </div>
-        )}
-
-        {(loading || searching) && (
-          <div className="loading-state">
-            {searching ? "Searching current listings..." : "Loading opportunities..."}
-          </div>
-        )}
+        {loading && <div className="loading-state">Loading opportunities...</div>}
         {error && <div className="message error-message">{error}</div>}
-        {!loading && !searching && !error && filteredJobs.length > 0 && (
+        {!loading && !error && filteredJobs.length > 0 && (
           <div className="job-grid">
             {filteredJobs.map((job) => <JobCard job={job} key={job.id} />)}
           </div>
         )}
-        {!loading && !searching && !error && filteredJobs.length === 0 && (
+        {!loading && !error && filteredJobs.length === 0 && (
           <div className="empty-state">
             <SearchIcon />
             <h3>No jobs found</h3>

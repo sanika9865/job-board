@@ -43,6 +43,25 @@ export default function JobDetailsPage({ params, searchParams }) {
     loadJob();
   }, [id]);
 
+  useEffect(() => {
+    try {
+      const profile = JSON.parse(
+        localStorage.getItem("jobboard-profile") || "null",
+      );
+      if (profile) {
+        setForm((current) => ({
+          ...current,
+          name: profile.name || "",
+          email: profile.email || "",
+          phone: profile.phone || "",
+          resumeUrl: profile.resumeUrl
+            ? `${window.location.origin}${profile.resumeUrl}`
+            : "",
+        }));
+      }
+    } catch {}
+  }, []);
+
   function updateField(event) {
     setForm((current) => ({
       ...current,

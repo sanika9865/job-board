@@ -10,11 +10,12 @@ export default function Header() {
       <nav aria-label="Main navigation">
         <Link href="/#jobs">Find jobs</Link>
         <Link href="/dashboard/candidate">My applications</Link>
+        <Link href="/profile">Profile</Link>
         <Link href="/dashboard/employer">Employer dashboard</Link>
       </nav>
       <div className="nav-actions">
-        <Link className="text-button nav-link-button" href="/dashboard/candidate">
-          Track applications
+        <Link className="text-button nav-link-button" href="/profile">
+          My profile
         </Link>
         <Link className="post-button nav-link-button" href="/post-job">
           Post a job

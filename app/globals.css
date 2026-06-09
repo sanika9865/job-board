@@ -543,6 +543,30 @@ nav a:hover {
   width: 100%;
 }
 
+.card-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: auto 1fr;
+}
+
+.save-button {
+  background: #f1f4f1;
+  border: 1px solid #d9ded9;
+  border-radius: 8px;
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 10px 13px;
+}
+
+.card-message {
+  color: #5c6d65;
+  display: block;
+  font-size: 11px;
+  margin-top: 8px;
+  text-align: center;
+}
+
 .details-button:hover {
   background: var(--forest);
   color: white;
@@ -1245,6 +1269,312 @@ textarea {
   padding: 45px 24px;
 }
 
+.search-page-hero {
+  background: var(--forest);
+  color: white;
+  padding: 48px max(5vw, 24px);
+}
+
+.search-page-hero > div,
+.results-search {
+  margin: 0 auto;
+  max-width: 1152px;
+}
+
+.search-page-hero h1 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(38px, 5vw, 56px);
+  letter-spacing: -2px;
+  margin: 6px 0 30px;
+}
+
+.search-page-hero .section-kicker {
+  color: var(--lime);
+}
+
+.results-search {
+  background: white;
+  border-radius: 13px;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: 1fr 1fr auto;
+  overflow: hidden;
+  padding: 7px;
+}
+
+.results-search label {
+  align-items: center;
+  color: #7a8680;
+  display: flex;
+  gap: 10px;
+  padding: 0 13px;
+}
+
+.results-search label + label {
+  border-left: 1px solid var(--line);
+}
+
+.results-search svg {
+  fill: none;
+  height: 19px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  width: 19px;
+}
+
+.results-search input {
+  border: 0;
+  min-width: 0;
+  outline: 0;
+  padding: 14px 0;
+  width: 100%;
+}
+
+.results-search button {
+  background: var(--lime);
+  border: 0;
+  border-radius: 8px;
+  color: var(--forest);
+  font-weight: 800;
+  min-width: 120px;
+  padding: 13px 18px;
+}
+
+.results-search button:disabled {
+  cursor: wait;
+  opacity: .7;
+}
+
+.search-results-shell {
+  margin: 0 auto;
+  max-width: 1200px;
+  min-height: 55vh;
+  padding: 55px 24px 90px;
+}
+
+.results-heading {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 27px;
+}
+
+.results-heading h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: 30px;
+  letter-spacing: -1px;
+  margin: 0 0 5px;
+}
+
+.results-heading p,
+.results-heading > span {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+.search-loader {
+  align-items: center;
+  background: var(--cream);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 24px;
+  text-align: center;
+}
+
+.search-loader > span {
+  animation: search-spin .8s linear infinite;
+  border: 3px solid #d7dfd9;
+  border-radius: 50%;
+  border-top-color: var(--forest);
+  height: 38px;
+  width: 38px;
+}
+
+.search-loader h3 {
+  margin: 18px 0 6px;
+}
+
+.search-loader p {
+  color: var(--muted);
+  margin: 0;
+}
+
+@keyframes search-spin {
+  to { transform: rotate(360deg); }
+}
+
+.profile-banner,
+.candidate-hero {
+  align-items: center;
+  background: var(--cream);
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 58px max(6vw, 24px);
+}
+
+.profile-banner {
+  justify-content: flex-start;
+}
+
+.profile-avatar {
+  align-items: center;
+  background: var(--forest);
+  border-radius: 22px;
+  color: var(--lime);
+  display: flex;
+  flex: 0 0 auto;
+  font-family: "Manrope", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  height: 88px;
+  justify-content: center;
+  width: 88px;
+}
+
+.profile-banner h1,
+.candidate-hero h1 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(34px, 4.5vw, 52px);
+  letter-spacing: -2px;
+  margin: 5px 0 10px;
+}
+
+.profile-banner p,
+.candidate-hero p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.profile-shell {
+  align-items: start;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 250px 1fr;
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: 55px 24px 90px;
+}
+
+.profile-sidebar {
+  background: var(--forest);
+  border-radius: 14px;
+  color: white;
+  padding: 24px;
+  position: sticky;
+  top: 20px;
+}
+
+.profile-sidebar h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.profile-sidebar p,
+.profile-completion span {
+  color: #bdcbc6;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.profile-sidebar form {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 20px 0;
+}
+
+.profile-sidebar input {
+  border: 0;
+  border-radius: 8px;
+  min-width: 0;
+  padding: 11px;
+}
+
+.profile-completion {
+  border-top: 1px solid rgba(255,255,255,.15);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 18px;
+}
+
+.profile-form small {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.candidate-hero > div {
+  max-width: 720px;
+}
+
+.candidate-stats {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 55px;
+}
+
+.candidate-stats div {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.candidate-stats strong {
+  color: var(--forest);
+  font-family: "Manrope", sans-serif;
+  font-size: 30px;
+}
+
+.candidate-stats span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.dashboard-title > div h2 {
+  margin: 0;
+}
+
+.dashboard-title > a {
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.saved-row {
+  align-items: center;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.saved-row h3 {
+  font-family: "Manrope", sans-serif;
+  margin: 0 0 5px;
+}
+
+.saved-row p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
 @media (max-width: 900px) {
   nav {
     display: none;
@@ -1268,6 +1598,14 @@ textarea {
   }
 
   .application-card {
+    position: static;
+  }
+
+  .profile-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-sidebar {
     position: static;
   }
 }
@@ -1419,5 +1757,35 @@ textarea {
   .applicant-links {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .results-search {
+    grid-template-columns: 1fr;
+  }
+
+  .results-search label + label {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .results-heading,
+  .profile-banner,
+  .candidate-hero,
+  .saved-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .candidate-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-avatar {
+    height: 68px;
+    width: 68px;
+  }
+
+  .card-actions {
+    grid-template-columns: 1fr;
   }
 }

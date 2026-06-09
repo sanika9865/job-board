@@ -27,7 +27,11 @@ export default function EmployerDashboard() {
         throw new Error("Could not load the employer dashboard.");
       }
       setJobs(jobsData.jobs);
-      setApplications(applicationsData.applications);
+      setApplications(
+        applicationsData.applications.filter(
+          (application) => !application.external,
+        ),
+      );
     } catch (loadError) {
       setError(loadError.message);
     } finally {

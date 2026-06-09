@@ -79,5 +79,26 @@
       "createdAt": "2026-06-02T12:00:00.000Z"
     }
   ],
-  "applications": []
+  "applications": [],
+  "profiles": [
+    {
+      "id": "60eff6d9-e932-40ac-937f-9f657e2d82c8",
+      "name": "sanika",
+      "email": "sanikajadhav@gmail.com",
+      "phone": "7604940450",
+      "headline": "webdeveloper with stong frontend skill",
+      "location": "pune,india",
+      "targetRole": "software engineer",
+      "experienceLevel": "Mid Level",
+      "skills": "react, python, javascript, chatgpt, antigravity, rubicks cube, cards,",
+      "bio": "I am awesome",
+      "preferredMode": "Any",
+      "linkedinUrl": "https://linkin.com/",
+      "portfolioUrl": "https://myportfolio.com/",
+      "resumeUrl": "/uploads/b28fa563-c363-485f-a2c2-f7b36ec17c6f.pdf",
+      "createdAt": "2026-06-09T09:38:07.932Z",
+      "updatedAt": "2026-06-09T09:38:14.943Z"
+    }
+  ],
+  "savedJobs": []
 }
