@@ -1,0 +1,83 @@
+{
+  "jobs": [
+    {
+      "id": "job-1",
+      "title": "Senior Product Designer",
+      "company": "Northstar Labs",
+      "location": "San Francisco, CA",
+      "salary": "$135k - $165k",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "description": "Lead product design for tools used by thousands of modern teams. You will partner with product and engineering from discovery through delivery.",
+      "requirements": "5+ years of product design experience\nStrong portfolio of end-to-end product work\nExperience with design systems and user research",
+      "contactEmail": "hiring@northstar.example",
+      "createdAt": "2026-06-07T09:00:00.000Z"
+    },
+    {
+      "id": "job-2",
+      "title": "Frontend Developer",
+      "company": "Arcade Studio",
+      "location": "New York, NY",
+      "salary": "$110k - $140k",
+      "type": "Full-time",
+      "mode": "Remote",
+      "description": "Build polished, accessible interfaces for a fast-growing creative platform using React, TypeScript, and a thoughtful design system.",
+      "requirements": "3+ years building web applications\nStrong React and JavaScript skills\nA practical understanding of accessibility",
+      "contactEmail": "jobs@arcade.example",
+      "createdAt": "2026-06-06T11:30:00.000Z"
+    },
+    {
+      "id": "job-3",
+      "title": "Marketing Manager",
+      "company": "Brightline",
+      "location": "Austin, TX",
+      "salary": "$90k - $115k",
+      "type": "Full-time",
+      "mode": "On-site",
+      "description": "Own integrated campaigns across content, lifecycle, and paid channels while helping shape the voice of a growing consumer brand.",
+      "requirements": "4+ years in growth or product marketing\nExcellent writing and campaign planning skills\nExperience measuring campaign performance",
+      "contactEmail": "people@brightline.example",
+      "createdAt": "2026-06-05T14:00:00.000Z"
+    },
+    {
+      "id": "job-4",
+      "title": "Backend Engineer",
+      "company": "CloudPeak",
+      "location": "Remote",
+      "salary": "$125k - $155k",
+      "type": "Full-time",
+      "mode": "Remote",
+      "description": "Design reliable APIs and distributed systems that power our global infrastructure platform. Experience with Node.js or Go is welcome.",
+      "requirements": "Strong backend engineering fundamentals\nExperience designing APIs and data models\nComfort working with cloud infrastructure",
+      "contactEmail": "engineering@cloudpeak.example",
+      "createdAt": "2026-06-04T08:15:00.000Z"
+    },
+    {
+      "id": "job-5",
+      "title": "Data Analyst",
+      "company": "Metric House",
+      "location": "Chicago, IL",
+      "salary": "$82k - $105k",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "description": "Turn complex customer data into clear insights and dashboards that help teams make confident, evidence-based decisions.",
+      "requirements": "Advanced SQL skills\nExperience with dashboard tools\nClear written and verbal communication",
+      "contactEmail": "careers@metrichouse.example",
+      "createdAt": "2026-06-03T10:45:00.000Z"
+    },
+    {
+      "id": "job-6",
+      "title": "UX Researcher",
+      "company": "Morrow Health",
+      "location": "Boston, MA",
+      "salary": "$105k - $130k",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "description": "Plan and lead generative and evaluative research that improves digital healthcare experiences for patients and providers.",
+      "requirements": "Experience planning mixed-method research\nStrong synthesis and presentation skills\nHealthcare experience is helpful but not required",
+      "contactEmail": "talent@morrow.example",
+      "createdAt": "2026-06-02T12:00:00.000Z"
+    }
+  ],
+  "applications": []
+}
