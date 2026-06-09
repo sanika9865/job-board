@@ -34,7 +34,10 @@ export default function JobCard({ job }) {
     <article className="job-card">
       <div className="card-top">
         <div className={`company-logo ${color}`}>{initials(job.company)}</div>
-        <span className="posted">{timeAgo(job.createdAt)}</span>
+        <div className="card-source">
+          {job.source && <span>{job.source}</span>}
+          <span className="posted">{timeAgo(job.createdAt)}</span>
+        </div>
       </div>
       <div className="job-info">
         <h3>{job.title}</h3>
@@ -48,10 +51,20 @@ export default function JobCard({ job }) {
         <span>{job.type}</span>
         <span>{job.mode}</span>
       </div>
-      <Link className="details-button" href={`/jobs/${job.id}`}>
-        View details
-        <ArrowIcon />
-      </Link>
+      {job.external ? (
+        <a
+          className="details-button"
+          href={job.applyUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          View and apply <ArrowIcon />
+        </a>
+      ) : (
+        <Link className="details-button" href={`/jobs/${job.id}`}>
+          View details <ArrowIcon />
+        </Link>
+      )}
     </article>
   );
 }

@@ -12,7 +12,10 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(true);
+  const [searching, setSearching] = useState(false);
   const [error, setError] = useState("");
+  const [sources, setSources] = useState(["JobBoard"]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     async function loadJobs() {
@@ -32,6 +35,8 @@ export default function Home() {
   }, []);
 
   const filteredJobs = useMemo(() => {
+    if (hasSearched) return jobs;
+
     const queryText = query.trim().toLowerCase();
     const locationText = location.trim().toLowerCase();
 
@@ -47,11 +52,31 @@ export default function Home() {
         job.mode.toLowerCase().includes(locationText);
       return matchesQuery && matchesLocation;
     });
-  }, [jobs, query, location]);
+  }, [jobs, query, location, hasSearched]);
 
-  function showResults(event) {
+  async function showResults(event) {
     event.preventDefault();
+    setSearching(true);
+    setError("");
     document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
+
+    try {
+      const params = new URLSearchParams();
+      if (query.trim()) params.set("q", query.trim());
+      if (location.trim()) params.set("location", location.trim());
+      const response = await fetch(`/api/search?${params.toString()}`, {
+        cache: "no-store",
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Search is unavailable.");
+      setJobs(data.jobs);
+      setSources(data.meta.sources);
+      setHasSearched(true);
+    } catch (searchError) {
+      setError(searchError.message);
+    } finally {
+      setSearching(false);
+    }
   }
 
   return (
@@ -91,15 +116,15 @@ export default function Home() {
                 placeholder="City or remote"
               />
             </label>
-            <button className="search-button" type="submit">
-              Search jobs <ArrowIcon />
+            <button className="search-button" type="submit" disabled={searching}>
+              {searching ? "Searching..." : "Search jobs"} <ArrowIcon />
             </button>
           </form>
 
           <div className="popular">
             <span>Popular:</span>
-            {["Design", "Engineer", "Marketing"].map((item) => (
-              <button key={item} onClick={() => setQuery(item)}>{item}</button>
+            {["Design", "Engineering", "Marketing"].map((item) => (
+              <button key={item} type="button" onClick={() => setQuery(item)}>{item}</button>
             ))}
           </div>
         </div>
@@ -109,7 +134,7 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <span className="section-kicker">Current opportunities</span>
-            <h2>Find your next role</h2>
+            <h2>{hasSearched ? "Search results" : "Find your next role"}</h2>
           </div>
           {!loading && !error && (
             <p>
@@ -119,18 +144,45 @@ export default function Home() {
           )}
         </div>
 
-        {loading && <div className="loading-state">Loading opportunities...</div>}
+        {hasSearched && !searching && !error && (
+          <div className="search-summary">
+            <span>Sources: {sources.join(", ")}</span>
+            <button
+              onClick={() => {
+                setQuery("");
+                setLocation("");
+                setHasSearched(false);
+                setLoading(true);
+                fetch("/api/jobs", { cache: "no-store" })
+                  .then((response) => response.json())
+                  .then((data) => setJobs(data.jobs))
+                  .finally(() => setLoading(false));
+              }}
+            >
+              Reset search
+            </button>
+          </div>
+        )}
+
+        {(loading || searching) && (
+          <div className="loading-state">
+            {searching ? "Searching current listings..." : "Loading opportunities..."}
+          </div>
+        )}
         {error && <div className="message error-message">{error}</div>}
-        {!loading && !error && filteredJobs.length > 0 && (
+        {!loading && !searching && !error && filteredJobs.length > 0 && (
           <div className="job-grid">
             {filteredJobs.map((job) => <JobCard job={job} key={job.id} />)}
           </div>
         )}
-        {!loading && !error && filteredJobs.length === 0 && (
+        {!loading && !searching && !error && filteredJobs.length === 0 && (
           <div className="empty-state">
             <SearchIcon />
             <h3>No jobs found</h3>
-            <p>Try a different role, company, or location.</p>
+            <p>
+              Try a broader title, use a country instead of a city, or search
+              for remote work.
+            </p>
             <button onClick={() => { setQuery(""); setLocation(""); }}>
               Clear search
             </button>

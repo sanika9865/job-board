@@ -310,6 +310,11 @@ nav a:hover {
   white-space: nowrap;
 }
 
+.search-button:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+
 .popular {
   align-items: center;
   color: #9fb0aa;
@@ -420,6 +425,45 @@ nav a:hover {
   color: #929b96;
   font-size: 12px;
   font-weight: 600;
+}
+
+.card-source {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-source > span:first-child:not(.posted) {
+  background: #edf2ee;
+  border-radius: 999px;
+  color: #587065;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  padding: 4px 7px;
+  text-transform: uppercase;
+}
+
+.search-summary {
+  align-items: center;
+  background: var(--cream);
+  border-radius: 9px;
+  color: var(--muted);
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+  margin: -15px 0 25px;
+  padding: 11px 14px;
+}
+
+.search-summary button {
+  background: transparent;
+  border: 0;
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px;
 }
 
 .job-info {
